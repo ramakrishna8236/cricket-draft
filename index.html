@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#081426" />
+  <meta name="description" content="Cricket Draft is a live auction game for 2–7 friends. Pick a country and format, bid for cricketers, and build your best five." />
+  <title>Cricket Draft — Build your best five</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/styles.css" />
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js" defer></script>
+  <script type="module" src="/src/app.js"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Cricket Draft home"><span class="brand-mark">C<span>D</span></span><span>CRICKET<span class="brand-light">DRAFT</span></span></a>
+      <div class="header-right"><span class="era-pill"><span class="pulse-dot"></span>THE 2010+ ERA</span><button type="button" id="header-how" class="text-button">How it works</button></div>
+    </header>
+
+    <main id="landing">
+      <section class="hero">
+        <div class="hero-image" aria-hidden="true"></div>
+        <div class="hero-copy">
+          <p class="hero-kicker"><span></span> THE LIVE CRICKET AUCTION</p>
+          <h1>BUILD YOUR<br /><em>BEST FIVE.</em></h1>
+          <p class="hero-summary">One country. One match format. Five cricketers to draft. Bid against your friends and see whose team comes out on top.</p>
+          <div class="hero-actions"><a href="#play" class="primary-button">Create a room <span aria-hidden="true">↗</span></a><button type="button" id="hero-join" class="ghost-button">Join a room</button></div>
+          <p class="eligibility-note">2010+ Era: players must have represented their country within the past five years. Debut year does not matter.</p>
+        </div>
+        <div class="hero-bottom"><span>2–7 PLAYERS</span><span>4 MATCH FORMATS</span><span>1 WINNING TEAM</span></div>
+      </section>
+
+      <section id="play" class="setup-section">
+        <div class="section-intro"><span class="section-line"></span><div><p class="section-label">YOUR DRAFT BEGINS HERE</p><h2>Set the stage.</h2><p>Choose the room rules, then invite your friends into the auction.</p></div></div>
+        <div class="setup-card">
+          <div class="setup-tabs"><button type="button" class="setup-tab active" data-tab="create">Create room</button><button type="button" class="setup-tab" data-tab="join">Join room</button></div>
+          <form id="create-form" class="setup-form">
+            <div class="form-row"><label class="field"><span>Your name</span><input id="create-name" required maxlength="30" placeholder="Enter your name" autocomplete="nickname" /></label><label class="field"><span>Country</span><select id="create-country" required></select></label></div>
+            <fieldset class="format-field"><legend>Match format</legend><div class="format-options">
+              <label><input type="radio" name="format" value="odi" checked /><span>ODI</span></label>
+              <label><input type="radio" name="format" value="t20" /><span>T20I</span></label>
+              <label><input type="radio" name="format" value="ipl" /><span>IPL</span></label>
+              <label><input type="radio" name="format" value="test" /><span>TEST</span></label>
+            </div></fieldset>
+            <div class="form-row"><label class="field"><span>Players in room</span><select id="create-size"></select></label><label class="field"><span>Budget per player</span><select id="create-budget"><option value="20">20 credits</option><option value="30">30 credits</option><option value="40">40 credits</option><option value="50" selected>50 credits</option><option value="60">60 credits</option><option value="70">70 credits</option><option value="80">80 credits</option><option value="90">90 credits</option><option value="100">100 credits</option></select></label></div>
+            <p id="pool-note" class="pool-note" role="status"></p>
+            <button type="submit" class="primary-button submit-button">Create room <span aria-hidden="true">↗</span></button>
+          </form>
+          <form id="join-form" class="setup-form hidden">
+            <label class="field"><span>Your name</span><input id="join-name" required maxlength="30" placeholder="Enter your name" autocomplete="nickname" /></label>
+            <label class="field"><span>Room code</span><input id="join-code" required maxlength="10" placeholder="e.g. SPIN42" autocapitalize="characters" /></label>
+            <button type="submit" class="primary-button submit-button">Join room <span aria-hidden="true">↗</span></button>
+            <p class="form-help">Ask the host to keep their room tab open while you play.</p>
+          </form>
+        </div>
+      </section>
+
+      <section id="how" class="how-section"><div class="how-title"><p class="section-label">THE GAME IN THREE MOVES</p><h2>Draft. Decide. Win.</h2></div><div class="how-grid"><article><span>01</span><h3>Pick the pitch</h3><p>Choose a country and one of four match formats. Every room has a shared budget.</p></article><article><span>02</span><h3>Own the auction</h3><p>Cricketers appear one by one. Bid, raise, or pass as you build any five-player team.</p></article><article><span>03</span><h3>Reveal the winner</h3><p>Once every team is full, format-specific scores decide the final leaderboard.</p></article></div></section>
+    </main>
+
+    <main id="game" class="game-main hidden" aria-live="polite"></main>
+    <footer class="site-footer"><span>CRICKET DRAFT <span class="footer-year">2010+ ERA</span></span><span>Match data: <a href="https://cricsheet.org/" target="_blank" rel="noopener noreferrer">Cricsheet</a> · Open Data Commons Attribution License</span></footer>
+  </div>
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+</body>
+</html>
