@@ -55,6 +55,26 @@ test('seven-player auction completes with unique five-player teams and no oversp
   assert.ok(allPicks.every((id) => eligiblePlayers(india, 'odi').some((player) => player.id === id)));
 });
 
+test('a leading bidder can pass and reopen the auction', () => {
+  const room = createRoom({ code: 'TEST44', country: india, format: 'odi', size: 2, budget: 20, name: 'Player 1' });
+  room.players.push({ id: 'P2', name: 'Player 2', budget: 20, picks: [], connected: true });
+  room.phase = 'draft';
+  room.currentBid = 5;
+  room.highBidder = 'P1';
+  room.passed = [];
+  room.round = 1;
+  room.pool = ['a', 'b', 'c', 'd'];
+  room.index = 0;
+
+  const allowed = applyAction(room, 'P1', 'PASS');
+
+  assert.equal(allowed, true);
+  assert.equal(room.highBidder, null);
+  assert.equal(room.currentBid, 0);
+  assert.deepEqual(room.passed, ['P1']);
+  assert.equal(canBid(room, room.players[1]), true);
+});
+
 test('any five is legal, while an exact 2/2/1 team gets a results-only bonus', () => {
   const country = { name: 'Fixture', players: [
     { id: 'a', role: 'BAT', ratings: { odi: 50 } },

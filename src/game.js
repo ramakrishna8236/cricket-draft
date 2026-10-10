@@ -72,8 +72,13 @@ export function applyAction(room, playerId, action, amount) {
     room.highBidder = playerId;
     room.bidHistory.push({ playerId, amount });
   } else if (action === 'PASS') {
-    if (room.passed.includes(playerId) || room.highBidder === playerId) return false;
+    if (room.passed.includes(playerId)) return false;
     room.passed.push(playerId);
+    if (room.highBidder === playerId) {
+      room.highBidder = null;
+      room.currentBid = 0;
+      room.bidHistory = [];
+    }
   } else return false;
   resolveAuction(room);
   return true;
